@@ -1,0 +1,90 @@
+# my global config
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+  scrape_timeout: 10s
+
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+      - 192.168.122.155:9093
+
+rule_files:
+  - "/opt/monitor/prometheus/rules/*.yml"
+
+scrape_configs:
+#  - job_name: 'file_sd'
+#    file_sd_configs:
+#    - files: ['/opt/monitor/prometheus/sd_config/*.yml']
+#      refresh_interval: 5s
+#h5
+#h5 es
+  - job_name: 'h5-es-nodes'
+    consul_sd_configs:
+    - server: 192.168.122.155:8500
+      services: ['h5ESNodes']
+  - job_name: 'h5-es-monitors'
+    consul_sd_configs:
+    - server: 192.168.122.155:8500
+      services: ['h5ESMonitors']
+#settle
+#settle mysql
+  - job_name: 'settle-mysql-nodes'
+    consul_sd_configs:
+    - server: 192.168.122.155:8500
+      services: ['settleMysqlNodes']
+  - job_name: 'settle-mysql-monitors'
+    consul_sd_configs:
+    - server: 192.168.122.155:8500
+      services: ['settleMysqlMonitors']
+#settle es
+  - job_name: 'settle-es-nodes'
+    consul_sd_configs:
+    - server: 192.168.122.155:8500
+      services: ['settleESNodes']
+  - job_name: 'settle-es-monitors'
+    consul_sd_configs:
+    - server: 192.168.122.155:8500
+      services: ['settleESMonitors']
+
+#bes 
+#bes mysql
+  - job_name: 'bes-mysql-nodes'
+    consul_sd_configs:
+    - server: 192.168.122.155:8500
+      services: ['besMysqlNodes']
+  - job_name: 'bes-mysql-monitors'
+    consul_sd_configs:
+    - server: 192.168.122.155:8500
+      services: ['besMysqlMonitors']
+  - job_name: 'mysqltest'
+    consul_sd_configs:
+    - server: 192.168.122.155:8500
+      services: ['mysqltest']
+#bes redis
+  - job_name: 'bes-redis-nodes'
+    consul_sd_configs:
+    - server: 192.168.122.155:8500
+      services: ['besRedisNodes']
+  - job_name: 'bes-redis-monitors'
+    consul_sd_configs:
+    - server: 192.168.122.155:8500
+      services: ['besRedisMonitors']
+#bes rabbitmq
+  - job_name: 'bes-rabbitmq-nodes001'
+    consul_sd_configs:
+    - server: 192.168.122.155:8500
+      services: ['besRabbitmqNodes001']
+  - job_name: 'bes-rabbitmq-monitors001'
+    consul_sd_configs:
+    - server: 192.168.122.155:8500
+      services: ['besRabbitMonitors001']
+  - job_name: 'bes-rabbitmq-nodes002'
+    consul_sd_configs:
+    - server: 192.168.122.155:8500
+      services: ['besRabbitmqNodes002']
+  - job_name: 'bes-rabbitmq-monitors002'
+    consul_sd_configs:
+    - server: 192.168.122.155:8500
+      services: ['besRabbitMonitors002']

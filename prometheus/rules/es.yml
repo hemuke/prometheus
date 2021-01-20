@@ -1,0 +1,67 @@
+groups:
+- name: ESStatsAlert
+  rules:
+  - alert: ES is down
+    expr:  elasticsearch_cluster_health_up == 0
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Instance {{ $labels.instance }} ES is down"
+      description: "ES is down!"
+  - alert: ES cluster health red 
+    expr: elasticsearch_cluster_health_status{color="red"} == 1
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Instance {{ $labels.instance }} ES cluster health red"
+      description: "ES cluster health red"
+  - alert: ES cluster health yellow 
+    expr: elasticsearch_cluster_health_status{color="yellow"} == 1
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Instance {{ $labels.instance }} ES cluster health yellow"
+      description: " ES cluster health yellow"
+  - alert: Elasticsearch_json_parse_failures 
+    expr: irate(elasticsearch_cluster_health_json_parse_failures[5m]) > 0
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: "ElasticSearch node {{ $labels.instance }}: json parse failures > 0 and has a value of {{ $value }}"
+      description: "ElasticSearch node: json parse failures > 0 and has a value of {{ $value }}"
+  - alert: Elasticsearch_breakers_tripped
+    expr: rate(elasticsearch_breakers_tripped{}[5m])>0
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: "ElasticSearch node {{ $labels.instance }}: breakers tripped > 0 and has a value of {{ $value }}"
+      description: "ElasticSearch node: breakers tripped > 0 and has a value of {{ $value }}"
+  - alert: Elasticsearch_JVM_Heap_Too_High
+    expr: elasticsearch_jvm_memory_used_bytes{area="heap"} / elasticsearch_jvm_memory_max_bytes{area="heap"} > 0.8
+    for: 20m
+    labels:
+      severity: warning
+    annotations:
+      summary: "ElasticSearch node {{ $labels.instance }} heap usage is high"
+      description: "The heap in is over 80% for 20m."
+  - alert: Elasticsearch_Count_of_JVM_GC_Runs
+    expr: rate(elasticsearch_jvm_gc_collection_seconds_count{}[20m])>5
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: "ElasticSearch node {{ $labels.instance }}: Count of JVM GC runs > 5 per sec and has a value of {{ $value }} 20m"
+      description: "ElasticSearch node: Count of JVM GC runs > 5 per sec and has a value of {{ $value }} 20m"
+  - alert: Elasticsearch_GC_Run_Time
+    expr: rate(elasticsearch_jvm_gc_collection_seconds_sum[5m])>0.3
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: "ElasticSearch node {{ $labels.instance }}: GC run time in seconds > 0.3 sec and has a value of {{ $value }} 5m"
+      description: "ElasticSearch node: GC run time in seconds > 0.3 sec and has a value of {{ $value }} 5m"

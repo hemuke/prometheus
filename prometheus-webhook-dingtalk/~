@@ -1,0 +1,11 @@
+[Unit]
+Description=prometheus-webhook-dingtalk
+After=network-online.target
+ 
+[Service]
+Restart=on-failure
+ExecStart=/opt/monitor/prometheus-webhook-dingtalk/prometheus-webhook-dingtalk \
+          --ding.profile=webhook1=https://oapi.dingtalk.com/robot/send?access_token=b63d45e8a4e385ba14b3a9ee2bc7a090ec0b876a0de319fd2d684e6e86a6dfb5
+ 
+[Install]
+WantedBy=multi-user.target

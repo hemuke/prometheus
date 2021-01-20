@@ -1,0 +1,53 @@
+global:
+  resolve_timeout: 5m
+
+route:
+  group_by: ['cluster', 'alertname']
+  group_wait: 1s
+  group_interval: 1s
+  repeat_interval: 5m
+  # 未匹配到的规则默认报警到web.hook 这里的web.hook是bes中间件
+  receiver: 'web.hook'
+  
+  routes:
+  - receiver: 'ShengDaDatabase'
+    group_wait: 1s
+    match_re: 
+      job: bes-mysql-monitors|bes-mysql-nodes|settle-mysql-nodes|settle-mysql-monitors
+#  - receiver: 'ShengDaDatabase'
+#    group_wait: 1s
+#    match: 
+#      job: "bes-mysql-monitors"
+  - receiver: 'h5es'
+    group_wait: 1s
+    match_re:
+      job: h5-es-monitors|h5-es-nodes
+  - receiver: 'settle'
+    group_wait: 1s
+    match_re:
+      job: settle-es-nodes|settle-es-monitors
+
+receivers:
+- name: 'h5es'
+  webhook_configs:
+  - url: http://192.168.122.155:8060/dingtalk/webhook3/send
+    send_resolved: true
+- name: 'ShengDaDatabase'
+  webhook_configs:
+  - url: http://192.168.122.155:8060/dingtalk/webhook2/send
+    send_resolved: true
+- name: 'settle'
+  webhook_configs:
+  - url: http://192.168.122.155:8060/dingtalk/webhook4/send
+    send_resolved: true
+- name: 'web.hook'
+  webhook_configs:
+  - url: http://192.168.122.155:8060/dingtalk/webhook1/send
+    send_resolved: true
+  
+inhibit_rules:
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname', 'dev', 'instance']

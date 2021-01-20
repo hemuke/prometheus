@@ -1,0 +1,4 @@
+t=2021-01-13T16:31:01+0800 lvl=info msg="Request Completed" logger=context userId=0 orgId=0 uname= method=GET path=/d/MQWgroiiz/4-mysql-overview status=302 remote_addr=192.168.66.149 time_ms=1 size=29 referer=
+t=2021-01-13T16:31:21+0800 lvl=info msg="Successful Login" logger=http.server User=admin@localhost
+t=2021-01-13T16:32:04+0800 lvl=eror msg="Data proxy error" logger=data-proxy-log userId=1 orgId=1 uname=admin path=/api/datasources/proxy/1/api/v1/query_range remote_addr=192.168.66.149 referer=http://192.168.122.155:3000/d/8Glrw-AMk/5-elasticsearch error="http: proxy error: context canceled"
+t=2021-01-13T16:32:04+0800 lvl=eror msg="Request Completed" logger=context userId=1 orgId=1 uname=admin method=GET path=/api/datasources/proxy/1/api/v1/query_range status=502 remote_addr=192.168.66.149 time_ms=1 size=0 referer=http://192.168.122.155:3000/d/8Glrw-AMk/5-elasticsearch

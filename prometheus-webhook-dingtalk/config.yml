@@ -1,0 +1,48 @@
+## Request timeout
+# timeout: 5s
+
+## Customizable templates path
+# templates:
+#   - contrib/templates/legacy/template.tmpl
+
+## You can also override default template using `default_message`
+## The following example to use the 'legacy' template from v0.3.0
+# default_message:
+#   title: '{{ template "legacy.title" . }}'
+#   text: '{{ template "legacy.content" . }}'
+
+## Targets, previously was known as "profiles"
+targets:
+  webhook1:
+    url: https://oapi.dingtalk.com/robot/send?access_token=c5b713507062b6e97c36004903df49631f6be7d48fb761e5250c55ac207696a6 
+    # secret for signature
+    secret: SEC689ed927d70a6d370eaeee36d1a560f3e765aa1d0bca9cfb17068be8c0f5df54
+  webhook2:
+    url: https://oapi.dingtalk.com/robot/send?access_token=568f8470d9fc500e923f533cda7c13ccf8f8cd28ed3b3201015a5624b3bfcbef
+    # secret for signature
+    secret: SEC8253900317e350f35128b043841d85a304b2e1a2c1d02a0b791d053a60e2678e
+  webhook3:
+    url: https://oapi.dingtalk.com/robot/send?access_token=908988e764c8861a432307e89498e0cf786a9ccb8f8c4d31a6a84cd8ba0d662d
+    # secret for signature
+    secret: SEC78fac8292f5d096d943dc67c06ac1ae61d08426f592f56bf644d35e8d11bb86a
+  webhook4:
+    url: https://oapi.dingtalk.com/robot/send?access_token=4943a511bb7e69df91d5328d2188fca8ad66d21c68f1a4a0fab4c478d949a289
+    # secret for signature
+    secret: SEC2c5d661e3e334b076237f353f250b8c7e9298cb74ce2fc8123c55b5ebc63a9ea
+#  webhook2:
+#    url: https://oapi.dingtalk.com/robot/send?access_token=xxxxxxxxxxxx
+#  webhook_legacy:
+#    url: https://oapi.dingtalk.com/robot/send?access_token=xxxxxxxxxxxx
+#    # Customize template content
+#    message:
+#      # Use legacy template
+#      title: '{{ template "legacy.title" . }}'
+#      text: '{{ template "legacy.content" . }}'
+#  webhook_mention_all:
+#    url: https://oapi.dingtalk.com/robot/send?access_token=xxxxxxxxxxxx
+#    mention:
+#      all: true
+#  webhook_mention_users:
+#    url: https://oapi.dingtalk.com/robot/send?access_token=xxxxxxxxxxxx
+#    mention:
+#      mobiles: ['156xxxx8827', '189xxxx8325']

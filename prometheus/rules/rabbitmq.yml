@@ -1,0 +1,51 @@
+groups:
+  - name: RABBITMQ_EXPORTER
+    rules:
+    - alert: RabbitmqClusterDown
+      expr: sum(rabbitmq_running) by (node) < 3
+      for: 1m
+      labels:
+        severity: critical
+      annotations:
+        summary: "Rabbitmq cluster down (instance {{ $labels.instance }})"
+        description: "Less than 3 nodes running in RabbitMQ cluster\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+    - alert: RabbitmqClusterPartition
+      expr: rabbitmq_partitions > 0
+      for: 1m
+      labels:
+        severity: warning
+      annotations:
+        summary: "Rabbitmq cluster partition (instance {{ $labels.instance }})"
+        description: "Cluster partition\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+    - alert: RabbitmqTooManyConnections
+      expr: rabbitmq_connections  > 100
+      for: 1m
+      labels:
+        severity: warning
+      annotations:
+        summary: "Rabbitmq too many connections (instance {{ $labels.instance }})"
+        description: "RabbitMQ instance has too many connections (> 1000)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+    - alert: RabbitmqDeadLetterQueueFillingUp
+      expr: rabbitmq_queue_messages{queue="my-dead-letter-queue"} > 10
+      for: 1m
+      labels:
+        severity: warning
+      annotations:
+        summary: "Rabbitmq dead letter queue filling up (instance {{ $labels.instance }})"
+        description: "Dead letter queue is filling up (> 10 msgs)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+    - alert: RabbitmqTooManyMessagesInQueue
+      expr: rabbitmq_queue_messages_ready > 300
+      for: 1m
+      labels:
+        severity: warning
+      annotations:
+        summary: "Rabbitmq too many messages in queue (instance {{ $labels.instance }})"
+        description: "Queue is filling up (> 300 msgs)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+    - alert: RabbitmqNoConsumer
+      expr: rabbitmq_queue_consumers == 0
+      for: 1m
+      labels:
+        severity: warning
+      annotations:
+        summary: "Rabbitmq no consumer (instance {{ $labels.instance }})"
+        description: "Queue has no consumer\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
